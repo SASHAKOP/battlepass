@@ -1,0 +1,10 @@
+main: io.github.battlepass.BattlePassPlugin # Головний клас плагіна
+name: BattlePass # Назва плагіна
+version: 3.13 # Версія плагіна (така ж, як у build.gradle)
+api-version: 1.16 # Мінімальна версія Spigot API. Встановіть 1.16 або 1.17.
+author: SASHAKOP # Ваше ім'я або ім'я оригінального автора
+# softdepend: # Необов'язкові залежності (якщо плагін може працювати без них)
+#   - PlaceholderAPI
+#   - Citizens
+# depend: # Обов'язкові залежності (якщо плагін не працюватиме без них)
+#   - Vault # Приклад: якщо плагін потребує Vault
