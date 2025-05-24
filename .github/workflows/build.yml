@@ -1,0 +1,36 @@
+name: Compile BattlePass Plugin
+
+on:
+  push:
+    branches:
+      - master # Замініть на 'master', якщо це основна гілка вашого форку
+  workflow_dispatch: # Дозволяє запускати робочий процес вручну з інтерфейсу GitHub
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Використовуємо віртуальну машину Ubuntu на серверах GitHub
+
+    steps:
+      - uses: actions/checkout@v4 # Крок 1: Клонуємо вихідний код вашого форку
+        with:
+          fetch-depth: 0 # Завантажуємо повну історію для деяких Gradle плагінів
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4 # Крок 2: Налаштовуємо Java Development Kit (JDK)
+        with:
+          java-version: '17' # Використовуємо JDK версії 17
+          distribution: 'temurin' # Рекомендований дистрибутив OpenJDK
+          cache: 'gradle' # Кешуємо залежності Gradle для прискорення майбутніх збірок
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew # Крок 3: Надаємо дозволи на виконання скрипту Gradle Wrapper
+
+      - name: Build with Gradle
+        run: ./gradlew build # Крок 4: Запускаємо компіляцію за допомогою Gradle
+
+      - name: Upload compiled JAR
+        uses: actions/upload-artifact@v4 # Крок 5: Завантажуємо скомпільований JAR як "артефакт"
+        with:
+          name: BattlePass-Plugin-JAR # Назва ZIP-файлу, який ви завантажите
+          path: build/libs/*.jar # Шлях до скомпільованого JAR-файлу всередині репозиторію
+          retention-days: 7 # Зберігати артефакт протягом 7 днів
